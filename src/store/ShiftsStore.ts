@@ -33,8 +33,10 @@ class ShiftsStore {
       let latitude = this.location?.latitude;
       let longitude = this.location?.longitude;
       if (!this.location) {
-        // На эмуляторе геолокация работает странно и определяет где-то в США, для наглядности сделана захардкоженая ссылка
+        // На эмуляторе геолокация работает странно и определяет где-то в США, для наглядности сделана захардкоженая ссылка из ТЗ. Для проверки можно раскоммитить =)
         // const { lat, lon } = await this.requestLocation();
+        // latitude = lat;
+        // longitude = lon;
         latitude = 45.039268;
         longitude = 38.987221;
       }
