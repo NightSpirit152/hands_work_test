@@ -1,6 +1,6 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import Geolocation from "react-native-geolocation-service";
-import type { Shift } from "../types";
+import { makeAutoObservable, runInAction } from 'mobx';
+import Geolocation from 'react-native-geolocation-service';
+import type { Shift } from '../types';
 
 class ShiftsStore {
   shifts: Shift[] = [];
@@ -21,13 +21,14 @@ class ShiftsStore {
       Geolocation.getCurrentPosition(
         pos => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
         err => reject(err),
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
       );
     });
   }
 
   async fetchShifts() {
-    this.loading = true; this.error = null;
+    this.loading = true;
+    this.error = null;
     try {
       let latitude = this.location?.latitude;
       let longitude = this.location?.longitude;
@@ -38,7 +39,9 @@ class ShiftsStore {
         longitude = 38.987221;
       }
 
-      const res = await fetch(`https://mobile.handswork.pro/api/shifts/map-list-unauthorized?latitude=${latitude}&longitude=${longitude}`);
+      const res = await fetch(
+        `https://mobile.handswork.pro/api/shifts/map-list-unauthorized?latitude=${latitude}&longitude=${longitude}`,
+      );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const dataList = await res.json();
 
@@ -47,11 +50,11 @@ class ShiftsStore {
       runInAction(() => {
         this.shifts = items;
         this.loading = false;
-        this.location = { latitude, longitude }
+        this.location = { latitude, longitude };
       });
     } catch (e: any) {
       runInAction(() => {
-        this.error = e?.message ?? "Ошибка";
+        this.error = e?.message ?? 'Ошибка';
         this.loading = false;
       });
     }

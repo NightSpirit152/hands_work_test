@@ -4,7 +4,7 @@ export type Shift = {
   coordinates: {
     latitude: number;
     longitude: number;
-  }
+  };
   address: string;
   companyName: string;
   dateStartByCity: string;
@@ -26,4 +26,4 @@ type WorkType = {
   nameGt5: string;
   nameLt5: string;
   nameOne: string;
-}
+};

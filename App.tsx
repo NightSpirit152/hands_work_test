@@ -15,8 +15,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ShiftsList" component={ShiftsList} options={{ title: 'Смены рядом' }} />
-        <Stack.Screen name="ShiftDetails" component={ShiftDetails} options={{ title: 'Детали смены' }} />
+        <Stack.Screen
+          name="ShiftsList"
+          component={ShiftsList}
+          options={{ title: 'Смены рядом' }}
+        />
+        <Stack.Screen
+          name="ShiftDetails"
+          component={ShiftDetails}
+          options={{ title: 'Детали смены' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
