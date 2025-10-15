@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { shiftsStore } from '../../store/ShiftsStore.ts';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../../App.tsx';
+import { styles } from './styles.ts';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ShiftDetails'>;
 
@@ -13,30 +14,38 @@ const ShiftDetails = observer(({ route }: Props) => {
 
   if (!shift) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <View style={styles.infoContainer}>
         <Text>Смена не найдена</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16 }}>
-      {!!shift.logo && (
-        <Image
-          source={{ uri: shift.logo }}
-          style={{ width: '100%', height: 180, borderRadius: 12, marginBottom: 16 }}
-          resizeMode="cover"
-        />
-      )}
-      <Text style={{ fontSize: 20, fontWeight: '700' }}>{shift.companyName}</Text>
-      {!!shift.companyName && <Text style={{ marginTop: 6, color: '#9aa4b2' }}>{shift.companyName}</Text>}
-      {!!shift.address && <Text style={{ marginTop: 6 }}>{shift.address}</Text>}
-
-      <View style={{ marginTop: 12 }}>
-        {!!shift.dateStartByCity && <Text>Начало: {new Date(shift.dateStartByCity).toLocaleString()}</Text>}
-        {!!shift.timeEndByCity && <Text>Окончание: {new Date(shift.timeEndByCity).toLocaleString()}</Text>}
-        {!!shift.priceWorker && <Text>Оплата: {shift.priceWorker} ₽/час</Text>}
-        {!!shift.customerRating && <Text>Рейтинг: {shift.customerRating} км</Text>}
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image
+        source={{ uri: shift.logo }}
+        style={styles.logo}
+        resizeMode="cover"
+      />
+      <Text style={styles.companyNameText}>{shift.companyName}</Text>
+      <Text>
+        Свободно мест: {shift.planWorkers - shift.currentWorkers}/
+        {shift.planWorkers}
+      </Text>
+      <Text>{shift.address}</Text>
+      <View style={styles.infoBlock}>
+        <Text style={styles.defaultText}>Дата: {shift.dateStartByCity}</Text>
+        <Text style={styles.defaultText}>
+          Время: {shift.timeStartByCity} - {shift.timeEndByCity}
+        </Text>
+        <Text style={styles.defaultText}>Оплата: {shift.priceWorker} ₽</Text>
+        <Text style={styles.defaultText}>Рейтинг: {shift.customerRating}</Text>
+      </View>
+      <View style={styles.infoBlock}>
+        <Text style={styles.defaultText}>{shift.customerFeedbacksCount}</Text>
+        {
+          // TODO: Можно в дальнейшем добавить список отзывов
+        }
       </View>
     </ScrollView>
   );
